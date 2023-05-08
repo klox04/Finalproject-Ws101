@@ -97,12 +97,14 @@ export default function Home() {
   }
 
   return (
-  <div class='main'>
-     <div>
-          <button onClick={logout}>Log Out</button>
-        </div>
-    <div class>
-    <h1>Home Page</h1>
+  <div className="w-full min-h-screen bg-white-900" >
+     <div className="bg-white pb-16 border-b-2 border-gray-900">
+      <div className="p-5 ml-10 float-right text-xl text-gray-900 font-mono">
+          <button onClick={logout}>LogOut</button>
+          </div>  
+    <div className="p-5 ml-10 float-left text-xl text-gray-900 font-mono font-semibold">
+    <h1 >Home</h1>
+    </div>
     </div>
 
     <div>
