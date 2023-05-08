@@ -107,31 +107,34 @@ export default function Home() {
     </div>
     </div>
 
-    <div>
+    <div  class="flex justify-center items-center mt-10 ">
+    <div class="mr-5">
       <input placeholder='Name'
       type='text'
       value={name}
        onChange={(event) => setName(event.target.value)}></input>
     </div>
 
-    <div>
+    <div class="mr-5">
       <input placeholder='Age'
       type='number'
       value={age}
        onChange={(event) => setAge(event.target.value)}></input>
     </div>
     
+    
     {isUpdate ?(
    <button onClick={updateFields }>update</button>
     ):(
       <button onClick={addData}>Add</button>
     )}
+    </div>
    
     
-    <div>
+    <div  class="flex justify-center items-center mt-10">
       {fireData.map((data)=> {
         return(
-          <div>
+          <div >
             <h1>{data.name}</h1>
             <p>{data.age}</p>
 
@@ -140,7 +143,7 @@ export default function Home() {
         )
       })}
     </div>
-
+    
   </div>
   )
 }
