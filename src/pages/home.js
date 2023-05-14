@@ -1,5 +1,5 @@
-import Head from 'next/head'
-import Image from 'next/image'
+import Head from 'next/head';
+import Image from 'next/image';
 import { useEffect, useState } from 'react'
 import { app, database } from './firebaseConfig';
 import {
@@ -11,6 +11,7 @@ import {
   deleteDoc
 } from 'firebase/firestore';
 import { useRouter } from 'next/router';
+import { storage } from './firebaseConfig';
 export default function Home() {
   const [ID, setID] = useState(null);
   const [name, setName] = useState('');
@@ -19,6 +20,7 @@ export default function Home() {
   const [address, setAddress]=useState("");
   const [fireData, setFireData] = useState([]);
   const [isUpdate, setIsUpdate] = useState(false);
+  const [imageUrl, setImageUrl] = useState('');
   const databaseRef = collection(database, 'CRUD Data');
   let router = useRouter()
   useEffect(() => {
@@ -80,9 +82,7 @@ export default function Home() {
       name: name,
       age: Number(age),
       emailadd: emailadd,
-      address: address
-
-      
+      address: address,
     })
     .then(() => {
       alert('Data Updated')
@@ -97,7 +97,6 @@ export default function Home() {
       console.log(err);
     })
   }
-
   const deleteDocument = (id) => {
     let fieldToEdit = doc(database, 'CRUD Data', id);
     deleteDoc(fieldToEdit)
@@ -126,6 +125,7 @@ export default function Home() {
 
     <main  class="flex-1 overflow-y-auto p-4">
       <div class="mb-4">
+      
       <input
         placeholder='Name'
         class="w-full px-3 py-2 rounded-lg border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
@@ -188,7 +188,7 @@ export default function Home() {
               <h1 class="mb-2">Address: {data.address}</h1>
               <button class="px-3 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 mr-2"
                
-                onClick={() => getID(data.id, data.name, data.age)}
+                onClick={() => getID(data.id, data.name, data.age, data.emailadd, data.address)}
               >Update</button>
               <button
                 class="px-3 py-2 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 mr-2"
