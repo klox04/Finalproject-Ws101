@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect, useState } from 'react'
 import { app, database } from './firebaseConfig';
+import Link from 'next/link';
 import {
   collection,
   addDoc,
@@ -48,7 +49,7 @@ export default function Home() {
         alert('Data Sent')
         getData()
         setName('')
-        setAge(null)
+        setAge('')
         setEmailAdd("")
         setAddress("")
       })
@@ -88,7 +89,7 @@ export default function Home() {
       alert('Data Updated')
       getData()
       setName('')
-      setAge(null)
+      setAge('')
       setEmailAdd('')
       setAddress('')
       setIsUpdate(false)
@@ -114,91 +115,98 @@ export default function Home() {
     router.push('/login')
   }
 
+
   return (
-    <div class="flex flex-col h-screen" >
-    <header class="bg-gray-800 text-white py-3 px-4">
-    <div class="flex justify-between items-center">
-      <h1 class="text-2xl font-bold">Home</h1>
-      <button class="px-3 py-1 bg-gray-600 rounded" onClick={logout}>Log Out</button>
-    </div>
-  </header>
-
-    <main  class="flex-1 overflow-y-auto p-4">
-      <div class="mb-4">
-      
-      <input
-        placeholder='Name'
-        class="w-full px-3 py-2 rounded-lg border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-        type="text"
-        value={name}
-        onChange={event => setName(event.target.value)}
-      />
-      </div>
-      <div  class="mb-4">
-      <input
-        placeholder='Age'
-        class="w-full px-3 py-2 rounded-lg border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-        type="number"
-        value={age}
-        onChange={event => setAge(event.target.value)}
-      />
-      </div>
-      <div  class="mb-4">
-      <input
-        placeholder='Email Address'
-        class="w-full px-3 py-2 rounded-lg border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-        type="text"
-        value={emailadd}
-        onChange={event => setEmailAdd(event.target.value)}
-      />
-      </div>
-      <div  class="mb-4">
-      <input
-        placeholder='Address'
-        class="w-full px-3 py-2 rounded-lg border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-        type="text"
-        value={address}
-        onChange={event => setAddress(event.target.value)}
-      />
-      </div>
-
-      {isUpdate ? (
-        <button
-        class="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
-          onClick={updateFields}
-        >
-          UPDATE
+    <div className="flex flex-col h-screen">
+    <header className="bg-gray-800 text-white py-3 px-4">
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-bold">Home</h1>
+    
+        <button className="px-3 py-1 bg-gray-600 rounded" onClick={logout}>
+          Log Out
         </button>
-      ) : (
-        <button
-        class="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
-          onClick={addData}
-        >
-          ADD
-        </button>
-      )}
-
-      <div class="mt-4 grid grid-cols-2 gap-4 place-content-stretch h-48 ...flex items-stretch ... " >
-        {fireData.map((data) => {
-          return (
-            <div class="bg-gray-100 p-4 mb-4 rounded-lg border-solid border-2 border-indigo-600 " >
-              <h1 class="font-bold mb-2">Name: {data.name}</h1>
-              <h1 class="mb-2">Age: {data.age}</h1>
-              <h1 class="mb-2">Email Address: {data.emailadd}</h1>
-              <h1 class="mb-2">Address: {data.address}</h1>
-              <button class="px-3 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 mr-2"
-               
-                onClick={() => getID(data.id, data.name, data.age, data.emailadd, data.address)}
-              >Update</button>
-              <button
-                class="px-3 py-2 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 mr-2"
-                onClick={() => deleteDocument(data.id)}
-              >Delete</button>
-            </div>
-          )
-        })}
       </div>
+    </header>
+    <div class="flex items-center justify-center mt-2" >
+  <div class="mb-4 mr-1" >
+    <input
+      placeholder="Name"
+      class="border border-gray-300 rounded px-4 py-2"
+      value={name}
+      onChange={(event) => setName(event.target.value)}
+    />
+  </div>
+  <div   class="mb-4 mr-1">
+    <input
+      placeholder="Age"
+      class="border border-gray-300 rounded px-4 py-2"
+      type="number"
+      value={age}
+      onChange={(event) => setAge(event.target.value)}
+    />
+  </div>
+  <div   class="mb-4 mr-1">
+    <input
+      placeholder="Email Address"
+      class="border border-gray-300 rounded px-4 py-2"
+      type="text"
+      value={emailadd}
+      onChange={(event) => setEmailAdd(event.target.value)}
+    />
+  </div>
+  <div   class="mb-4 mr-1">
+    <input
+      placeholder="Address"
+      class="border border-gray-300 rounded px-4 py-2"
+      type="text"
+      value={address}
+      onChange={(event) => setAddress(event.target.value)}
+    />
+  </div>
+  <div  class="mb-4 mr-1">
+  {isUpdate ? (
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"  onClick={updateFields}>
+      UPDATE
+    </button>
+  ) : (
+    <button   class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"  onClick={addData}>
+      ADD
+    </button>
+  )}
+  </div>
+</div>
+    <main className="flex-1 overflow-y-auto p-4  ">
+      <table className="w-full border-solid border-2 border-gray-500">
+        <thead>
+          <tr>
+            <th className="py-2 px-4 border-solid border-2 border-gray-500">Name</th>
+            <th className="py-2 px-4 border-solid border-2 border-gray-500">Age</th>
+            <th className="py-2 px-4 border-solid border-2 border-gray-500">Email Address</th>
+            <th className="py-2 px-4 border-solid border-2 border-gray-500">Address</th>
+            <th className="py-2 px-4 border-solid border-2 border-gray-500">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {fireData .slice().map((data) =>  (
+            <tr key={data.id} class='text-center'>
+              <td className="py-2 px-4 border-solid border-2 border-gray-500">{data.name}</td>
+              <td className="py-2 px-4 border-solid border-2 border-gray-500">{data.age}</td>
+              <td className="py-2 px-4 border-solid border-2 border-gray-500">{data.emailadd}</td>
+              <td className="py-2 px-4 border-solid border-2 border-gray-500">{data.address}</td>
+              <td className="py-2 px-4 border-solid border-2 border-gray-500">
+                <button className="px-3 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 mr-2" onClick={() => getID(data.id, data.name, data.age, data.emailadd, data.address)}>
+                  Update
+                </button>
+                <button className="px-3 py-2 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50" onClick={() => deleteDocument(data.id)}>
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </main>
+    <footer className="h-10 rounded-lg shadow"></footer>
   </div>
 )
 }

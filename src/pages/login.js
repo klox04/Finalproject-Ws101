@@ -87,7 +87,7 @@ export default function Register(){
                         Don't have an account?<button className="text-blue-900 ml-1" 
                         onClick={change}>sign up</button>
                         </h2>
-                
+               
             <button class="py-2 px-4 flex justify-center items-center  bg-gray-900 hover:bg-gray-900 text-white w-full transition ease-in duration-200 text-center text-base font-semibold 
                             shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
             onClick={signUpWithGoogle}>
