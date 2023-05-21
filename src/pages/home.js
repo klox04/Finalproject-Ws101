@@ -12,7 +12,6 @@ import {
   deleteDoc
 } from 'firebase/firestore';
 import { useRouter } from 'next/router';
-import { storage } from './firebaseConfig';
 export default function Home() {
   const [ID, setID] = useState(null);
   const [name, setName] = useState('');
@@ -128,7 +127,7 @@ export default function Home() {
       </div>
     </header>
     <div className="flex items-center justify-center mt-2" >
-  <div class="mb-4 mr-1" >
+  <div className="mb-4 mr-1" >
     <input
       placeholder="Name"
       className="border border-gray-300 rounded px-4 py-2"
@@ -136,7 +135,7 @@ export default function Home() {
       onChange={(event) => setName(event.target.value)}
     />
   </div>
-  <div   class="mb-4 mr-1">
+  <div className="mb-4 mr-1">
     <input
       placeholder="Age"
       className="border border-gray-300 rounded px-4 py-2"
@@ -145,7 +144,7 @@ export default function Home() {
       onChange={(event) => setAge(event.target.value)}
     />
   </div>
-  <div   class="mb-4 mr-1">
+  <div className="mb-4 mr-1">
     <input
       placeholder="Email Address"
       className="border border-gray-300 rounded px-4 py-2"
@@ -157,13 +156,13 @@ export default function Home() {
   <div className="mb-4 mr-1">
     <input
       placeholder="Address"
-      class="border border-gray-300 rounded px-4 py-2"
+      className="border border-gray-300 rounded px-4 py-2"
       type="text"
       value={address}
       onChange={(event) => setAddress(event.target.value)}
     />
   </div>
-  <div  class="mb-4 mr-1">
+  <div className="mb-4 mr-1">
   {isUpdate ? (
     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"  onClick={updateFields}>
       UPDATE
@@ -188,7 +187,7 @@ export default function Home() {
         </thead>
         <tbody>
           {fireData .slice().map((data) =>  (
-            <tr key={data.id} class='text-center'>
+            <tr key={data.id} className='text-center'>
               <td className="py-2 px-4 border-solid border-2 border-gray-500">{data.name}</td>
               <td className="py-2 px-4 border-solid border-2 border-gray-500">{data.age}</td>
               <td className="py-2 px-4 border-solid border-2 border-gray-500">{data.emailadd}</td>
@@ -208,13 +207,13 @@ export default function Home() {
     </main>
 
     <div className="flex items-center justify-center mt-2" >
-  <div class="mb-4 mr-1" >
+  <div className="mb-4 mr-1" >
     <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Home</button>
   </div>
-  <div   class="mb-4 mr-1">
+  <div  className="mb-4 mr-1">
   <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"> Client</button>
   </div>
-  <div   class="mb-4 mr-1">
+  <div className="mb-4 mr-1">
    <Link legacyBehavior href="/lot">
   <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Lot</button>
   </Link>

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import{app} from './firebaseConfig';
+import{} from './firebaseConfig';
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { 
@@ -94,11 +94,11 @@ export default function Register(){
                         hover-scale-105 duration-300" onClick={signUp }>login </button> <br></br>
 
                         <div  class="mt-4 flex items-center justify-center text-gray-900 font-mono">
-		<div class="flex-grow bg-gray-300 h-px"></div>
-		<p class="mx-3 text-sm text-gray-600">Login with social accounts</p>
-		<div class="flex-grow bg-gray-300 h-px"></div>
+		<div className="flex-grow bg-gray-300 h-px"></div>
+		<p className="mx-3 text-sm text-gray-600">Login with social accounts</p>
+		<div className="flex-grow bg-gray-300 h-px"></div>
 	</div>
-	<div class="mt-2 flex items-center justify-center">
+	<div className="mt-2 flex items-center justify-center">
 		<button aria-label="Log in with Google" class="bg-white rounded-full p-3"  onClick={signUpWithGoogle} >
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-6 h-6" >
 				<path d="M16.318 13.714v5.484h9.078c-0.37 2.354-2.745 6.901-9.078 6.901-5.458 0-9.917-4.521-9.917-10.099s4.458-10.099
@@ -106,7 +106,7 @@ export default function Register(){
 			</svg>
 		</button>
 		<button aria-label="Log in with GitHub" class="bg-white rounded-full p-3 " onClick={signUpWithGithub}>
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-6 h-6" >
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" className="w-6 h-6" >
 				<path d="M16 0.396c-8.839 0-16 7.167-16 16 0 7.073 4.584 13.068 10.937 15.183
                  0.803 0.151 1.093-0.344 1.093-0.772 0-0.38-0.009-1.385-0.015-2.719-4.453 0.964-5.391-2.151-5.391-2.151-0.729-1.844-1.781-2.339-1.781-2.339-1.448-0.989 0.115-0.968 0.115-0.968 1.604 0.109 2.448 1.645 2.448 1.645 
                  1.427 2.448 3.744 1.74 4.661 1.328 0.14-1.031 0.557-1.74 1.011-2.135-3.552-0.401-7.287-1.776-7.287-7.907 0-1.751 0.62-3.177 1.645-4.297-0.177-0.401-0.719-2.031 0.141-4.235 0 0 1.339-0.427 4.4 1.641 1.281-0.355 
