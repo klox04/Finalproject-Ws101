@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect, useState } from 'react'
-import {database} from './firebaseConfig';
+import { app, database } from './firebaseConfig';
 import Link from 'next/link';
 import {
   collection,
@@ -12,63 +12,45 @@ import {
   deleteDoc
 } from 'firebase/firestore';
 import { useRouter } from 'next/router';
-export default function Home() {
+export default function Client() {
   const [ID, setID] = useState(null);
-  const [lotnum, setLotNum] = useState(null);
-  const [maxLotNum, setMaxLotNum] = useState(0);
-  const [blocknum, setBlockNum] = useState(null);
-  const [typesoflot, setTypesOfLot]= useState('');
-  const [price, setPrice]=useState(null);
+  const [name, setName] = useState('');
+  const [age, setAge] = useState(null);
+  const [emailadd, setEmailAdd]= useState("");
+  const [address, setAddress]=useState("");
   const [fireData, setFireData] = useState([]);
   const [isUpdate, setIsUpdate] = useState(false);
-  const databaseRef = collection(database, 'Lot Data');
+  const [imageUrl, setImageUrl] = useState('');
+  const databaseRef = collection(database, 'CRUD Data');
   let router = useRouter()
   useEffect(() => {
     let token = sessionStorage.getItem('Token')
     if (token) {
       getData()
-      getMaxLotNumber();
     }
     if (!token) {
       router.push('/login')
     }
   }, [])
 
-  const getMaxLotNumber = async () => {
-    await getDocs(databaseRef)
-      .then((response) => {
-        let maxNum = 0;
-        response.docs.forEach((data) => {
-          const Num = data.data().Number;
-          if (Num > maxNum) {
-            maxNum = Num;
-          }
-        });
-        setMaxLotNum(maxNum);
-      });
-  };
-
   const addData = () => {
-    if ( lotnum == null ||blocknum === null || typesoflot.trim() === '' || price === null) {
+    if (name.trim() === '' || age.trim() === '' || emailadd.trim() === '' || address.trim() === '') {
       alert('Please fill in all fields');
       return;
     }
-    const newLotNum = maxLotNum + 1;
     addDoc(databaseRef, {
-      Number: newLotNum,
-      LotNumber: lotnum,
-      BlockNumber: Number(blocknum),
-      TypeOfLOT: typesoflot,
-      Price: Number(price)
+      name: name,
+      age: Number(age),
+      emailadd: emailadd,
+      address: address
     })
       .then(() => {
         alert('Data Sent')
         getData()
-        setLotNum('')
-        setBlockNum('')
-        setTypesOfLot('')
-        setPrice('')
-        setMaxLotNum(newLotNum);
+        setName('')
+        setAge('')
+        setEmailAdd("")
+        setAddress("")
       })
       .catch((err) => {
         console.error(err);
@@ -85,30 +67,30 @@ export default function Home() {
       })
   }
 
-  const getID = (id, lotnum, blocknum, typesoflot, price) => {
+  const getID = (id, name, age, emailadd, address) => {
     setID(id)
-    setLotNum(lotnum)
-    setBlockNum(blocknum)
-    setTypesOfLot(typesoflot)
-    setPrice(price)
+    setName(name)
+    setAge(age)
+    setEmailAdd(emailadd)
+    setAddress(address)
     setIsUpdate(true)
   }
 
   const updateFields = () => {
-    let fieldToEdit = doc(database, 'Lot Data', ID);
+    let fieldToEdit = doc(database, 'CRUD Data', ID);
     updateDoc(fieldToEdit, {
-        LotNumber: Number(lotnum),
-        BlockNumber: Number(blocknum),
-        TypeOfLOT: typesoflot,
-        Price: Number(price)
+      name: name,
+      age: Number(age),
+      emailadd: emailadd,
+      address: address,
     })
     .then(() => {
       alert('Data Updated')
       getData()
-      setLotNum('')
-      setBlockNum('')
-      setTypesOfLot('')
-      setPrice('')
+      setName('')
+      setAge('')
+      setEmailAdd('')
+      setAddress('')
       setIsUpdate(false)
     })
     .catch((err) => {
@@ -116,7 +98,7 @@ export default function Home() {
     })
   }
   const deleteDocument = (id) => {
-    let fieldToEdit = doc(database, 'Lot Data', id);
+    let fieldToEdit = doc(database, 'CRUD Data', id);
     deleteDoc(fieldToEdit)
     .then(() => {
       alert('Data Deleted')
@@ -137,7 +119,7 @@ export default function Home() {
     <div className="flex flex-col h-screen">
     <header className="bg-gray-800 text-white py-3 px-4">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Lot Management</h1>
+        <h1 className="text-2xl font-bold">Home</h1>
     
         <button className="px-3 py-1 bg-gray-600 rounded" onClick={logout}>
           Log Out
@@ -145,41 +127,40 @@ export default function Home() {
       </div>
     </header>
     <div className="flex items-center justify-center mt-2" >
-    <div className="mb-4 mr-1">
+  <div className="mb-4 mr-1" >
     <input
-      placeholder="Lot Number"
+      placeholder="Name"
       className="border border-gray-300 rounded px-4 py-2"
-      type="number"
-      value={lotnum}
-      onChange={(event) => setLotNum(event.target.value)}
+      value={name}
+      onChange={(event) => setName(event.target.value)}
     />
   </div>
   <div className="mb-4 mr-1">
     <input
-      placeholder="Block Number"
+      placeholder="Age"
       className="border border-gray-300 rounded px-4 py-2"
       type="number"
-      value={blocknum}
-      onChange={(event) => setBlockNum(event.target.value)}
+      value={age}
+      onChange={(event) => setAge(event.target.value)}
     />
   </div>
   <div className="mb-4 mr-1">
     <input
-      placeholder="Types of Lot"
+      placeholder="Email Address"
       className="border border-gray-300 rounded px-4 py-2"
       type="text"
-      value={typesoflot}
-      onChange={(event) => setTypesOfLot(event.target.value)}
+      value={emailadd}
+      onChange={(event) => setEmailAdd(event.target.value)}
     />
   </div>
   <div className="mb-4 mr-1">
     <input
-      placeholder="Price"
+      placeholder="Address"
       className="border border-gray-300 rounded px-4 py-2"
-      type="number"
-      value={price}
-      onChange={(event) => setPrice(event.target.value)}
-    /> 
+      type="text"
+      value={address}
+      onChange={(event) => setAddress(event.target.value)}
+    />
   </div>
   <div className="mb-4 mr-1">
   {isUpdate ? (
@@ -197,24 +178,22 @@ export default function Home() {
       <table className="w-full border-solid border-2 border-gray-500">
         <thead>
           <tr>
-          <th className="py-2 px-4 border-solid border-2 border-gray-500">NumLOT</th>
-            <th className="py-2 px-4 border-solid border-2 border-gray-500">Lot Number</th>
-            <th className="py-2 px-4 border-solid border-2 border-gray-500">Block Number</th>
-            <th className="py-2 px-4 border-solid border-2 border-gray-500">Types Of Lot</th>
-            <th className="py-2 px-4 border-solid border-2 border-gray-500">Price</th>
+            <th className="py-2 px-4 border-solid border-2 border-gray-500">Name</th>
+            <th className="py-2 px-4 border-solid border-2 border-gray-500">Age</th>
+            <th className="py-2 px-4 border-solid border-2 border-gray-500">Email Address</th>
+            <th className="py-2 px-4 border-solid border-2 border-gray-500">Address</th>
             <th className="py-2 px-4 border-solid border-2 border-gray-500">Actions</th>
           </tr>
         </thead>
         <tbody>
-          {fireData.map((data) =>  (
+          {fireData .slice().map((data) =>  (
             <tr key={data.id} className='text-center'>
-               <td className="py-2 px-4 border-solid border-2 border-gray-500">{data.Number}</td>
-              <td className="py-2 px-4 border-solid border-2 border-gray-500">{data.LotNumber}</td>
-              <td className="py-2 px-4 border-solid border-2 border-gray-500">{data.BlockNumber}</td>
-              <td className="py-2 px-4 border-solid border-2 border-gray-500">{data.TypeOfLOT}</td>
-              <td className="py-2 px-4 border-solid border-2 border-gray-500">{data.Price}</td>
+              <td className="py-2 px-4 border-solid border-2 border-gray-500">{data.name}</td>
+              <td className="py-2 px-4 border-solid border-2 border-gray-500">{data.age}</td>
+              <td className="py-2 px-4 border-solid border-2 border-gray-500">{data.emailadd}</td>
+              <td className="py-2 px-4 border-solid border-2 border-gray-500">{data.address}</td>
               <td className="py-2 px-4 border-solid border-2 border-gray-500">
-                <button className="px-3 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 mr-2" onClick={() => getID(data.id, data.LotNumber, data.BlockNumber, data.TypeOfLOT, data.Price)}>
+                <button className="px-3 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 mr-2" onClick={() => getID(data.id, data.name, data.age, data.emailadd, data.address)}>
                   Update
                 </button>
                 <button className="px-3 py-2 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50" onClick={() => deleteDocument(data.id)}>
@@ -226,7 +205,6 @@ export default function Home() {
         </tbody>
       </table>
     </main>
-
     <div className="flex items-center justify-center mt-2" >
   <div className="mb-4 mr-1" >
   <Link legacyBehavior href="/home">
@@ -253,7 +231,7 @@ export default function Home() {
   <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Payment</button>
   </Link>
   </div>
-  </div>
+</div>
     <footer className="h-10 rounded-lg shadow"></footer>
   </div>
 )
