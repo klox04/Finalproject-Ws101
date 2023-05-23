@@ -1,5 +1,3 @@
-import Head from 'next/head';
-import Image from 'next/image';
 import { useEffect, useState } from 'react'
 import {database} from './firebaseConfig';
 import Link from 'next/link';
@@ -21,6 +19,7 @@ export default function Home() {
   const [price, setPrice]=useState(null);
   const [fireData, setFireData] = useState([]);
   const [isUpdate, setIsUpdate] = useState(false);
+  const [isSidebarOpen, setSidebarOpen] = useState(true);
   const databaseRef = collection(database, 'Lot Data');
   let router = useRouter()
   useEffect(() => {
@@ -131,19 +130,88 @@ export default function Home() {
     sessionStorage.removeItem('Token')
     router.push('/login')
   }
+  const toggleSidebar = () => {
+    setSidebarOpen(!isSidebarOpen);
+  };
 
 
   return (
-    <div className="flex flex-col h-screen">
-    <header className="bg-gray-800 text-white py-3 px-4">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Lot Management</h1>
-    
-        <button className="px-3 py-1 bg-gray-600 rounded" onClick={logout}>
-          Log Out
-        </button>
-      </div>
-    </header>
+    <div className="flex h-screen bg-gray-200">
+       <aside
+        className={`w-64 bg-gray-900 text-white shadow ${isSidebarOpen ? "" : "hidden"}`}
+        id="sidebar"
+      >
+        <div className="p-4 mt-4">
+          <h1 className="text-lg font-semibold">Lot Management</h1>
+        </div>
+        <nav className="mt-6">
+          <ul className="space-y-2">
+            <li>
+              <Link legacyBehavior href="/home">
+                <a className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                  <span>Home</span>
+                </a>
+              </Link>
+            </li>
+            <li>
+              <Link legacyBehavior href="/client">
+                <a className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                  <span>Client</span>
+                </a>
+              </Link>
+            </li>
+            <li>
+              <Link legacyBehavior href="/lot">
+                <a className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                  <span>Lot</span>
+                </a>
+              </Link>
+            </li>
+            <li>
+              <Link legacyBehavior href="/account">
+                <a className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                  <span>Account</span>
+                </a>
+              </Link>
+            </li>
+            <li>
+              <Link legacyBehavior href="/payment">
+                <a className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                  <span>Payment</span>
+                </a>
+              </Link>
+            </li>
+            <li>
+                <a className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                  <span onClick={logout}>Logout</span>
+                </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      <button
+  className="text-gray-800 hover:text-gray-600 focus:outline-none"
+  onClick={toggleSidebar}
+>
+➤
+    {isSidebarOpen ? (
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M3 12h18M9 5l7 7-7 7"
+      />
+    ) : (
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M4 6h16M4 12h16M4 18h16"
+      />
+    )}
+  
+</button>
+            <main className="flex-grow container mx-auto px-4 py-8">
     <div className="flex items-center justify-center mt-2" >
     <div className="mb-4 mr-1">
     <input
@@ -226,35 +294,8 @@ export default function Home() {
         </tbody>
       </table>
     </main>
-
-    <div className="flex items-center justify-center mt-2" >
-  <div className="mb-4 mr-1" >
-  <Link legacyBehavior href="/home">
-    <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Home</button>
-    </Link>
-  </div>
-  <div  className="mb-4 mr-1">
-  <Link legacyBehavior href="/client">
-  <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"> Client</button>
-  </Link>
-  </div>
-  <div className="mb-4 mr-1">
-   <Link legacyBehavior href="/lot">
-  <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Lot</button>
-  </Link>
-  </div>
-  <div className="mb-4 mr-1">
-   <Link legacyBehavior href="/account">
-  <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Account</button>
-  </Link>
-  </div>
-  <div className="mb-4 mr-1">
-  <Link legacyBehavior href="/payment">
-  <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Payment</button>
-  </Link>
-  </div>
-  </div>
-    <footer className="h-10 rounded-lg shadow"></footer>
-  </div>
+    </main>
+    </div>
 )
+
 }
