@@ -1,5 +1,11 @@
 import Link from "next/link";
 import router from "next/router";
+import{AiFillHome} from 'react-icons/ai'
+import {BsPerson} from "react-icons/bs";
+import {TbBuildingWarehouse} from "react-icons/tb"
+import {MdAccountBox,MdPayments} from "react-icons/md"
+import {BiLogOut} from "react-icons/bi"
+
 
 export default function test (){
     const logout = () => {
@@ -9,50 +15,50 @@ export default function test (){
     return(
         <div class="flex h-screen bg-gray-200">
         
-        <aside class="w-64 bg-gray-900 text-white shadow">
+        <aside class="w-64 bg-gray-900">
           <div class="p-4">
-            <h1 class="text-lg font-semibold">Home</h1>
+            <h1 class="text-lg font-semibold text-white">Home</h1>
           </div>
           <nav class="mt-6">
             <ul class="space-y-2">
               <li>
               <Link legacyBehavior href="/home">
-                <a class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
-                  <span>Home</span>
+                <a class="flex items-center px-4 py-2 text-white font-semibold hover:bg-gray-100 hover:text-black font-bold"><AiFillHome size={18} className="mr-4"/>
+                  <span>Home </span>
                 </a>
                 </Link>
               </li>
               <li>
               <Link legacyBehavior href="/client">
-                <a className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                <a class="flex items-center px-4 py-2 text-white font-semibold hover:bg-gray-100 hover:text-black font-bold"><BsPerson size={18} className="mr-4"/>
                   <span>Client</span>
                 </a>
               </Link>
               </li>
               <li>
               <Link legacyBehavior href="/lot">
-                <a className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                <a class="flex items-center px-4 py-2 text-white font-semibold hover:bg-gray-100 hover:text-black font-bold"><TbBuildingWarehouse size={18} className="mr-4"/>
                   <span>Lot</span>
                 </a>
               </Link>
               </li>
               <li>
               <Link legacyBehavior href="/account">
-                <a className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                <a class="flex items-center px-4 py-2 text-white font-semibold hover:bg-gray-100 hover:text-black font-bold"><MdAccountBox size={18} className="mr-4"/>
                   <span>Account</span>
                 </a>
               </Link>
               </li>
               <li>
               <Link legacyBehavior href="/payment">
-                <a className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                <a class="flex items-center px-4 py-2 text-white font-semibold hover:bg-gray-100 hover:text-black font-bold"><MdPayments size={18} className="mr-4"/>
                   <span>Payment</span>
                 </a>
               </Link>
               </li>
 
               <li>
-                <a class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                <a class="flex items-center px-4 py-2 text-white font-semibold hover:bg-gray-100 hover:text-black font-bold"><BiLogOut size={18} className="mr-4"/>
                   <span onClick={logout}>Logout</span>
                 </a>
               </li>
